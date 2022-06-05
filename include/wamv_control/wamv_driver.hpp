@@ -24,31 +24,26 @@
 
 namespace wamv_control
 {
-  enum class Motor
-  {
-    THRUSTER_LEFT,
-    TURUSTER_RIGHT,
-    THRUSTER
-  };
+enum class Motor { THRUSTER_LEFT, TURUSTER_RIGHT, THRUSTER };
 
-  class WamVDriver
-  {
-  public:
-    WamVDriver(
-        const std::string &thruster_ip_address, const int &thruster_port, bool enable_dummy = true);
+class WamVDriver
+{
+public:
+  WamVDriver(
+    const std::string & thruster_ip_address, const int & thruster_port, bool enable_dummy = true);
 
-    const std::string thruster_ip_address;
-    const int thruster_port;
-    const bool enable_dummy;
-    void setThrust(const Motor &motor, double thrust);
-    bool sendCommand();
-    bool sendCommandtoMbed(double period, double duty);
+  const std::string thruster_ip_address;
+  const int thruster_port;
+  const bool enable_dummy;
+  void setThrust(const Motor & motor, double thrust);
+  bool sendCommand();
+  bool sendCommandtoMbed(double period, double duty);
 
-  private:
-    double left_thrust_;
-    double right_thrust_;
-    std::unique_ptr<tcp_sender::TcpClient> tcp_client_;
-  };
-} // namespace wamv_control
+private:
+  double left_thrust_;
+  double right_thrust_;
+  std::unique_ptr<tcp_sender::TcpClient> tcp_client_;
+};
+}  // namespace wamv_control
 
-#endif // WAMV_CONTROL__WAMV_DRIVER_HPP_
+#endif  // WAMV_CONTROL__WAMV_DRIVER_HPP_

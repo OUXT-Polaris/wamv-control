@@ -30,66 +30,66 @@
 #include <hardware_interface/types/hardware_interface_status_values.hpp>
 #endif
 #include <memory>
-#include <wamv_control/wamv_driver.hpp>
-#include <wamv_control/visibility_control.hpp>
 #include <rclcpp/macros.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <string>
 #include <vector>
+#include <wamv_control/visibility_control.hpp>
+#include <wamv_control/wamv_driver.hpp>
 
 using hardware_interface::return_type;
 
 namespace wamv_control
 {
-  class WamVHardware
+class WamVHardware
 #if GALACTIC
-      : public hardware_interface::SystemInterface
+: public hardware_interface::SystemInterface
 #else
-      : public hardware_interface::BaseInterface<hardware_interface::SystemInterface>
+: public hardware_interface::BaseInterface<hardware_interface::SystemInterface>
 #endif
-  {
-  public:
-    RCLCPP_SHARED_PTR_DEFINITIONS(WamVHardware)
+{
+public:
+  RCLCPP_SHARED_PTR_DEFINITIONS(WamVHardware)
 
-    WAMV_CONTROL_PUBLIC
-    ~WamVHardware();
+  WAMV_CONTROL_PUBLIC
+  ~WamVHardware();
 
 #if GALACTIC
-    WAMV_CONTROL_PUBLIC
-    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_init(
-        const hardware_interface::HardwareInfo &info) override;
+  WAMV_CONTROL_PUBLIC
+  rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn on_init(
+    const hardware_interface::HardwareInfo & info) override;
 #else
-    WAMV_CONTROL_PUBLIC
-    hardware_interface::return_type configure(const hardware_interface::HardwareInfo &info) override;
+  WAMV_CONTROL_PUBLIC
+  hardware_interface::return_type configure(const hardware_interface::HardwareInfo & info) override;
 #endif
 
-    WAMV_CONTROL_PUBLIC
-    std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+  WAMV_CONTROL_PUBLIC
+  std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
 
-    WAMV_CONTROL_PUBLIC
-    std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+  WAMV_CONTROL_PUBLIC
+  std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
 #ifndef GALACTIC
-    WAMV_CONTROL_PUBLIC
-    return_type start() override;
+  WAMV_CONTROL_PUBLIC
+  return_type start() override;
 
-    WAMV_CONTROL_PUBLIC
-    return_type stop() override;
+  WAMV_CONTROL_PUBLIC
+  return_type stop() override;
 #endif
 
-    WAMV_CONTROL_PUBLIC
-    return_type read() override;
+  WAMV_CONTROL_PUBLIC
+  return_type read() override;
 
-    WAMV_CONTROL_PUBLIC
-    return_type write() override;
+  WAMV_CONTROL_PUBLIC
+  return_type write() override;
 
-  private:
-    std::shared_ptr<WamVDriver> driver_;
-    double left_thrust_cmd_;
-    double right_thrust_cmd_;
-    std::string left_thruster_joint_;
-    std::string right_thruster_joint_;
-  };
-} // namespace wamv_control
+private:
+  std::shared_ptr<WamVDriver> driver_;
+  double left_thrust_cmd_;
+  double right_thrust_cmd_;
+  std::string left_thruster_joint_;
+  std::string right_thruster_joint_;
+};
+}  // namespace wamv_control
 
-#endif // WAMV_CONTROL__WAMV_HARDWARE_HPP_
+#endif  // WAMV_CONTROL__WAMV_HARDWARE_HPP_
