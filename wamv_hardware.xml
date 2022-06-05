@@ -1,0 +1,7 @@
+<library path="wamv_control">
+  <class name="wamv_control/WamVHardware" type="wamv_control::WamVHardware" base_class_type="hardware_interface::SystemInterface">
+    <description>
+      A wam-v hardware plugin for the ros2_control.
+    </description>
+  </class>
+</library>
