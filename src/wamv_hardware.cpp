@@ -25,14 +25,14 @@ namespace wamv_control
 {
 WamVHardware::~WamVHardware() {}
 
-#if GALACTIC
+#if defined(GALACTIC) || defined(HUMBLE)
 rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn WamVHardware::on_init(
   const hardware_interface::HardwareInfo & info)
 #else
 return_type WamVHardware::configure(const hardware_interface::HardwareInfo & info)
 #endif
 {
-#if GALACTIC
+#if defined(GALACTIC) || defined(HUMBLE)
   if (
     SystemInterface::on_init(info) !=
     rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS) {
@@ -40,7 +40,7 @@ return_type WamVHardware::configure(const hardware_interface::HardwareInfo & inf
   }
 #else
   if (configure_default(info) != hardware_interface::return_type::OK) {
-#if GALACTIC
+#if defined(GALACTIC) || defined(HUMBLE)
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::ERROR;
 #else
     return return_type::ERROR;
@@ -69,13 +69,13 @@ return_type WamVHardware::configure(const hardware_interface::HardwareInfo & inf
   try {
     driver_ = std::make_shared<WamVDriver>(thruster_ip_address, thruster_port, enable_dummy);
   } catch (const std::runtime_error & e) {
-#if GALACTIC
+#if defined(GALACTIC) || defined(HUMBLE)
     return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::ERROR;
 #else
     return return_type::ERROR;
 #endif
   }
-#if GALACTIC
+#if defined(GALACTIC) || defined(HUMBLE)
   return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
 #else
   return return_type::OK;
@@ -102,7 +102,7 @@ std::vector<hardware_interface::CommandInterface> WamVHardware::export_command_i
   return command_interfaces;
 }
 
-#ifndef GALACTIC
+#if defined(GALACTIC) || defined(HUMBLE)
 return_type WamVHardware::start()
 {
   status_ = hardware_interface::status::STARTED;
