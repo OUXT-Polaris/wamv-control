@@ -77,11 +77,23 @@ public:
   return_type stop() override;
 #endif
 
+if defined(HUMBLE)
+
+  WAMV_CONTROL_PUBLIC
+  return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+
+  WAMV_CONTROL_PUBLIC
+  return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+
+#else
+
   WAMV_CONTROL_PUBLIC
   return_type read() override;
 
   WAMV_CONTROL_PUBLIC
   return_type write() override;
+
+#endif
 
 private:
   std::shared_ptr<WamVDriver> driver_;

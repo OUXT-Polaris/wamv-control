@@ -102,7 +102,7 @@ std::vector<hardware_interface::CommandInterface> WamVHardware::export_command_i
   return command_interfaces;
 }
 
-#if defined(GALACTIC) || defined(HUMBLE)
+#if defined(GALACTIC)
 return_type WamVHardware::start()
 {
   status_ = hardware_interface::status::STARTED;
@@ -115,6 +115,28 @@ return_type WamVHardware::stop()
   return return_type::OK;
 }
 #endif
+
+#if defined(HUMBLE)
+
+return_type WamVHardware::read(const rclcpp::Time & time, const rclcpp::Duration & period)
+{
+  // RCLCPP_INFO_STREAM(rclcpp::get_logger("WamVHardware"), __FILE__ << "," << __LINE__);
+  return return_type::OK;
+}
+
+return_type WamVHardware::write(const rclcpp::Time & time, const rclcpp::Duration & period)
+{
+  driver_->setThrust(Motor::THRUSTER_LEFT, left_thrust_cmd_);
+  driver_->setThrust(Motor::TURUSTER_RIGHT, right_thrust_cmd_);
+  if (driver_->sendCommand()) {
+    return return_type::OK;
+  } else {
+    RCLCPP_ERROR_STREAM(rclcpp::get_logger("WamVHardware"), "failed to send command.");
+    return return_type::ERROR;
+  }
+}
+
+#else
 
 return_type WamVHardware::read()
 {
@@ -133,6 +155,8 @@ return_type WamVHardware::write()
     return return_type::ERROR;
   }
 }
+#endif
+
 }  // namespace wamv_control
 
 #include "pluginlib/class_list_macros.hpp"
