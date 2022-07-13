@@ -77,7 +77,7 @@ public:
   return_type stop() override;
 #endif
 
-if defined(HUMBLE)
+#if defined(HUMBLE)
 
   WAMV_CONTROL_PUBLIC
   return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
