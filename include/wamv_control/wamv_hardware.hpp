@@ -69,14 +69,6 @@ public:
   WAMV_CONTROL_PUBLIC
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
-#if defined(GALACTIC) || defined(HUMBLE)
-  WAMV_CONTROL_PUBLIC
-  return_type start() override;
-
-  WAMV_CONTROL_PUBLIC
-  return_type stop() override;
-#endif
-
 #if defined(HUMBLE)
 
   WAMV_CONTROL_PUBLIC
