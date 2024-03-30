@@ -118,13 +118,13 @@ return_type WamVHardware::stop()
 
 #if defined(HUMBLE)
 
-return_type WamVHardware::read(const rclcpp::Time & time, const rclcpp::Duration & period)
+return_type WamVHardware::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   // RCLCPP_INFO_STREAM(rclcpp::get_logger("WamVHardware"), __FILE__ << "," << __LINE__);
   return return_type::OK;
 }
 
-return_type WamVHardware::write(const rclcpp::Time & time, const rclcpp::Duration & period)
+return_type WamVHardware::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   driver_->setThrust(Motor::THRUSTER_LEFT, left_thrust_cmd_);
   driver_->setThrust(Motor::TURUSTER_RIGHT, right_thrust_cmd_);
